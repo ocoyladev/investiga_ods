@@ -13,6 +13,7 @@ services:
       - "5173:5173"
 
   backend:
+    entrypoint: []
     command: ["tail", "-f", "/dev/null"]
     volumes:
       - ./backend:/app
