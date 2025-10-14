@@ -13,17 +13,17 @@ export class Challenge extends BaseEntity {
   lesson?: Lesson;
 
   @Column()
-  title: string;
+  title!: string;
 
   @Column({ type: 'text', nullable: true })
   description?: string;
 
   @Column({ type: 'int', default: 0 })
-  points: number;
+  points!: number;
 
   @Column({ type: 'json', nullable: true })
   rules?: Record<string, unknown>;
 
   @OneToMany(() => ChallengeSubmission, (submission) => submission.challenge)
-  submissions: ChallengeSubmission[];
+  submissions!: ChallengeSubmission[];
 }

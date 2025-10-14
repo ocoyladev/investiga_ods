@@ -10,10 +10,10 @@ import { Certificate } from '../certificates/certificate.entity';
 @Entity({ name: 'users' })
 export class User extends BaseEntity {
   @Column({ unique: true })
-  email: string;
+  email!: string;
 
   @Column({ name: 'password_hash' })
-  passwordHash: string;
+  passwordHash!: string;
 
   @Column({ name: 'first_name', nullable: true })
   firstName?: string;
@@ -25,20 +25,20 @@ export class User extends BaseEntity {
   avatarUrl?: string;
 
   @Column({ type: 'enum', enum: UserRole, default: UserRole.STUDENT })
-  role: UserRole;
+  role!: UserRole;
 
   @OneToMany(() => Course, (course) => course.owner)
-  courses: Course[];
+  courses!: Course[];
 
   @OneToMany(() => Enrollment, (enrollment) => enrollment.user)
-  enrollments: Enrollment[];
+  enrollments!: Enrollment[];
 
   @OneToMany(() => Subscription, (subscription) => subscription.user)
-  subscriptions: Subscription[];
+  subscriptions!: Subscription[];
 
   @OneToMany(() => Attempt, (attempt) => attempt.user)
-  attempts: Attempt[];
+  attempts!: Attempt[];
 
   @OneToMany(() => Certificate, (certificate) => certificate.user)
-  certificates: Certificate[];
+  certificates!: Certificate[];
 }

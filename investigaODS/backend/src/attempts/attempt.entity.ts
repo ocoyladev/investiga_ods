@@ -13,23 +13,23 @@ export enum AttemptStatus {
 @Entity({ name: 'attempts' })
 export class Attempt extends BaseEntity {
   @ManyToOne(() => Quiz, (quiz) => quiz.attempts, { eager: true })
-  quiz: Quiz;
+  quiz!: Quiz;
 
   @ManyToOne(() => User, (user) => user.attempts, { eager: true })
-  user: User;
+  user!: User;
 
   @Column({ name: 'started_at', type: 'datetime' })
-  startedAt: Date;
+  startedAt!: Date;
 
   @Column({ name: 'submitted_at', type: 'datetime', nullable: true })
   submittedAt?: Date;
 
   @Column({ type: 'int', default: 0 })
-  score: number;
+  score!: number;
 
   @Column({ type: 'enum', enum: AttemptStatus, default: AttemptStatus.IN_PROGRESS })
-  status: AttemptStatus;
+  status!: AttemptStatus;
 
   @OneToMany(() => Answer, (answer) => answer.attempt, { cascade: true })
-  answers: Answer[];
+  answers!: Answer[];
 }

@@ -12,17 +12,17 @@ export enum SubscriptionStatus {
 @Entity({ name: 'subscriptions' })
 export class Subscription extends BaseEntity {
   @ManyToOne(() => User, (user) => user.subscriptions, { eager: true })
-  user: User;
+  user!: User;
 
   @ManyToOne(() => MembershipPlan, (plan) => plan.subscriptions, { eager: true })
-  plan: MembershipPlan;
+  plan!: MembershipPlan;
 
   @Column({ name: 'start_at', type: 'datetime' })
-  startAt: Date;
+  startAt!: Date;
 
   @Column({ name: 'end_at', type: 'datetime', nullable: true })
   endAt?: Date;
 
   @Column({ type: 'enum', enum: SubscriptionStatus, default: SubscriptionStatus.ACTIVE })
-  status: SubscriptionStatus;
+  status!: SubscriptionStatus;
 }

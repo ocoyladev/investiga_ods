@@ -5,7 +5,7 @@ import { QuizType } from '../quiz.entity';
 export class CreateQuizDto {
   @ApiProperty()
   @IsString()
-  title: string;
+  title!: string;
 
   @ApiPropertyOptional({ enum: QuizType })
   @IsOptional()

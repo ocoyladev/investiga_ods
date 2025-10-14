@@ -6,17 +6,17 @@ import { Lesson } from '../lessons/lesson.entity';
 @Entity({ name: 'course_modules' })
 export class CourseModule extends BaseEntity {
   @ManyToOne(() => Course, (course) => course.modules, { onDelete: 'CASCADE' })
-  course: Course;
+  course!: Course;
 
   @Column()
-  index: number;
+  index!: number;
 
   @Column()
-  title: string;
+  title!: string;
 
   @Column({ nullable: true })
   summary?: string;
 
   @OneToMany(() => Lesson, (lesson) => lesson.module)
-  lessons: Lesson[];
+  lessons!: Lesson[];
 }

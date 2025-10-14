@@ -7,13 +7,13 @@ import { Quiz } from '../quizzes/quiz.entity';
 @Entity({ name: 'lessons' })
 export class Lesson extends BaseEntity {
   @ManyToOne(() => CourseModule, (module) => module.lessons, { onDelete: 'CASCADE' })
-  module: CourseModule;
+  module!: CourseModule;
 
   @Column()
-  index: number;
+  index!: number;
 
   @Column()
-  title: string;
+  title!: string;
 
   @Column({ type: 'text', nullable: true })
   content?: string;
@@ -28,8 +28,8 @@ export class Lesson extends BaseEntity {
   resources?: Record<string, unknown>;
 
   @OneToMany(() => LessonProgress, (progress) => progress.lesson)
-  progresses: LessonProgress[];
+  progresses!: LessonProgress[];
 
   @OneToMany(() => Quiz, (quiz) => quiz.lesson)
-  quizzes: Quiz[];
+  quizzes!: Quiz[];
 }

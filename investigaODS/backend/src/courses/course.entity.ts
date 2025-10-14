@@ -35,13 +35,13 @@ export enum CourseTier {
 @Entity({ name: 'courses' })
 export class Course extends BaseEntity {
   @ManyToOne(() => User, (user) => user.courses, { eager: true })
-  owner: User;
+  owner!: User;
 
   @Column()
-  title: string;
+  title!: string;
 
   @Column({ unique: true })
-  slug: string;
+  slug!: string;
 
   @Column({ nullable: true })
   summary?: string;
@@ -59,42 +59,42 @@ export class Course extends BaseEntity {
   language?: string;
 
   @Column({ type: 'enum', enum: CourseVisibility, default: CourseVisibility.PUBLIC })
-  visibility: CourseVisibility;
+  visibility!: CourseVisibility;
 
   @Column({ type: 'enum', enum: CourseModality, default: CourseModality.SELF_PACED })
-  modality: CourseModality;
+  modality!: CourseModality;
 
   @Column({ type: 'enum', enum: CourseTier, default: CourseTier.FREE })
-  tierRequired: CourseTier;
+  tierRequired!: CourseTier;
 
   @Column({ default: false })
-  hasCertificate: boolean;
+  hasCertificate!: boolean;
 
   @Column({ default: false })
-  supportsLive: boolean;
+  supportsLive!: boolean;
 
   @Column({ default: false })
-  supportsChallenges: boolean;
+  supportsChallenges!: boolean;
 
   @OneToMany(() => CourseModule, (module) => module.course, { cascade: true })
-  modules: CourseModule[];
+  modules!: CourseModule[];
 
   @OneToMany(() => Cohort, (cohort) => cohort.course)
-  cohorts: Cohort[];
+  cohorts!: Cohort[];
 
   @OneToMany(() => Enrollment, (enrollment) => enrollment.course)
-  enrollments: Enrollment[];
+  enrollments!: Enrollment[];
 
   @ManyToMany(() => Tag, (tag) => tag.courses, { cascade: true })
   @JoinTable({ name: 'course_tags' })
-  tags: Tag[];
+  tags!: Tag[];
 
   @OneToMany(() => Certificate, (certificate) => certificate.course)
-  certificates: Certificate[];
+  certificates!: Certificate[];
 
   @OneToMany(() => LiveClass, (liveClass) => liveClass.course)
-  liveClasses: LiveClass[];
+  liveClasses!: LiveClass[];
 
   @OneToMany(() => Challenge, (challenge) => challenge.course)
-  challenges: Challenge[];
+  challenges!: Challenge[];
 }

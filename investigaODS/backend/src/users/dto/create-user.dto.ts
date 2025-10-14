@@ -5,12 +5,12 @@ import { UserRole } from '../user-role.enum';
 export class CreateUserDto {
   @ApiProperty()
   @IsEmail()
-  email: string;
+  email!: string;
 
   @ApiProperty()
   @IsString()
   @MinLength(8)
-  password: string;
+  password!: string;
 
   @ApiProperty({ required: false })
   @IsOptional()

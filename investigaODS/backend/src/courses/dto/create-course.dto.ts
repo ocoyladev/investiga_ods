@@ -5,11 +5,11 @@ import { CourseModality, CourseTier, CourseVisibility } from '../course.entity';
 export class CreateCourseDto {
   @ApiProperty()
   @IsString()
-  title: string;
+  title!: string;
 
   @ApiProperty()
   @IsString()
-  slug: string;
+  slug!: string;
 
   @ApiPropertyOptional()
   @IsOptional()

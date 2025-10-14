@@ -19,10 +19,10 @@ export class Quiz extends BaseEntity {
   lesson?: Lesson;
 
   @Column()
-  title: string;
+  title!: string;
 
   @Column({ type: 'enum', enum: QuizType, default: QuizType.QUIZ })
-  type: QuizType;
+  type!: QuizType;
 
   @Column({ name: 'pass_score', type: 'int', nullable: true })
   passScore?: number;
@@ -37,8 +37,8 @@ export class Quiz extends BaseEntity {
   weight?: number;
 
   @OneToMany(() => Question, (question) => question.quiz, { cascade: true })
-  questions: Question[];
+  questions!: Question[];
 
   @OneToMany(() => Attempt, (attempt) => attempt.quiz)
-  attempts: Attempt[];
+  attempts!: Attempt[];
 }

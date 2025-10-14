@@ -6,13 +6,13 @@ import { Option } from '../quizzes/option.entity';
 @Entity({ name: 'answers' })
 export class Answer {
   @PrimaryGeneratedColumn()
-  id: number;
+  id!: number;
 
   @ManyToOne(() => Attempt, (attempt) => attempt.answers, { onDelete: 'CASCADE' })
-  attempt: Attempt;
+  attempt!: Attempt;
 
   @ManyToOne(() => Question, (question) => question.answers, { eager: true })
-  question: Question;
+  question!: Question;
 
   @ManyToOne(() => Option, { eager: true, nullable: true })
   option?: Option;

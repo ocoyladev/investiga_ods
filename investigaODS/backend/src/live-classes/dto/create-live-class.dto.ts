@@ -4,11 +4,11 @@ import { IsDateString, IsInt, IsOptional, IsString } from 'class-validator';
 export class CreateLiveClassDto {
   @ApiProperty()
   @IsString()
-  title: string;
+  title!: string;
 
   @ApiProperty()
   @IsDateString()
-  startAt: string;
+  startAt!: string;
 
   @ApiPropertyOptional()
   @IsOptional()

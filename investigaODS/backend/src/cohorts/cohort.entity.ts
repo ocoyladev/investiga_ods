@@ -8,10 +8,10 @@ import { LiveClass } from '../live-classes/live-class.entity';
 @Entity({ name: 'cohorts' })
 export class Cohort extends BaseEntity {
   @ManyToOne(() => Course, (course) => course.cohorts, { onDelete: 'CASCADE' })
-  course: Course;
+  course!: Course;
 
   @Column()
-  name: string;
+  name!: string;
 
   @Column({ name: 'start_at', type: 'datetime', nullable: true })
   startAt?: Date;
@@ -23,11 +23,11 @@ export class Cohort extends BaseEntity {
   capacity?: number;
 
   @OneToMany(() => Enrollment, (enrollment) => enrollment.cohort)
-  enrollments: Enrollment[];
+  enrollments!: Enrollment[];
 
   @OneToMany(() => Certificate, (certificate) => certificate.cohort)
-  certificates: Certificate[];
+  certificates!: Certificate[];
 
   @OneToMany(() => LiveClass, (liveClass) => liveClass.cohort)
-  liveClasses: LiveClass[];
+  liveClasses!: LiveClass[];
 }

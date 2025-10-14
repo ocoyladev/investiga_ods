@@ -12,10 +12,10 @@ export class LiveClass extends BaseEntity {
   cohort?: Cohort;
 
   @Column()
-  title: string;
+  title!: string;
 
   @Column({ name: 'start_at', type: 'datetime' })
-  startAt: Date;
+  startAt!: Date;
 
   @Column({ name: 'end_at', type: 'datetime', nullable: true })
   endAt?: Date;

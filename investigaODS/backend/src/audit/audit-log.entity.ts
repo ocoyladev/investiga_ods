@@ -8,7 +8,7 @@ export class AuditLog extends BaseEntity {
   user?: User | null;
 
   @Column({ length: 255 })
-  action: string;
+  action!: string;
 
   @Column({ type: 'json', nullable: true })
   metadata?: Record<string, unknown> | null;

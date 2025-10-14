@@ -10,17 +10,17 @@ export enum MembershipPlanCode {
 @Entity({ name: 'membership_plans' })
 export class MembershipPlan extends BaseEntity {
   @Column({ type: 'enum', enum: MembershipPlanCode, unique: true })
-  code: MembershipPlanCode;
+  code!: MembershipPlanCode;
 
   @Column()
-  name: string;
+  name!: string;
 
   @Column({ type: 'json', nullable: true })
   features?: Record<string, unknown>;
 
   @Column({ default: true })
-  status: boolean;
+  status!: boolean;
 
   @OneToMany(() => Subscription, (subscription) => subscription.plan)
-  subscriptions: Subscription[];
+  subscriptions!: Subscription[];
 }

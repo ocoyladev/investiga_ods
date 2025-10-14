@@ -12,20 +12,20 @@ export enum EnrollmentStatus {
 @Entity({ name: 'enrollments' })
 export class Enrollment {
   @PrimaryGeneratedColumn()
-  id: number;
+  id!: number;
 
   @ManyToOne(() => User, (user) => user.enrollments, { eager: true })
-  user: User;
+  user!: User;
 
   @ManyToOne(() => Course, (course) => course.enrollments, { eager: true })
-  course: Course;
+  course!: Course;
 
   @ManyToOne(() => Cohort, (cohort) => cohort.enrollments, { eager: true, nullable: true })
   cohort?: Cohort;
 
   @Column({ type: 'enum', enum: EnrollmentStatus, default: EnrollmentStatus.ACTIVE })
-  status: EnrollmentStatus;
+  status!: EnrollmentStatus;
 
   @Column({ name: 'enrolled_at', type: 'datetime' })
-  enrolledAt: Date;
+  enrolledAt!: Date;
 }
