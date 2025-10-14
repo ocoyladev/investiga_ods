@@ -4,16 +4,16 @@ import { Question } from './question.entity';
 @Entity({ name: 'options' })
 export class Option {
   @PrimaryGeneratedColumn()
-  id: number;
+  id!: number;
 
   @ManyToOne(() => Question, (question) => question.options, { onDelete: 'CASCADE' })
-  question: Question;
+  question!: Question;
 
   @Column({ type: 'text' })
-  text: string;
+  text!: string;
 
   @Column({ name: 'is_correct', default: false })
-  isCorrect: boolean;
+  isCorrect!: boolean;
 
   @Column({ type: 'text', nullable: true })
   explanation?: string;

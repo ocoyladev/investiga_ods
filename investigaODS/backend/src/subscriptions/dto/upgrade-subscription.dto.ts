@@ -5,5 +5,5 @@ import { MembershipPlanCode } from '../../plans/membership-plan.entity';
 export class UpgradeSubscriptionDto {
   @ApiProperty({ enum: MembershipPlanCode })
   @IsEnum(MembershipPlanCode)
-  planCode: MembershipPlanCode;
+  planCode!: MembershipPlanCode;
 }

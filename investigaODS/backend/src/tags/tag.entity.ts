@@ -4,11 +4,11 @@ import { Course } from '../courses/course.entity';
 @Entity({ name: 'tags' })
 export class Tag {
   @PrimaryGeneratedColumn()
-  id: number;
+  id!: number;
 
   @Column({ unique: true })
-  name: string;
+  name!: string;
 
   @ManyToMany(() => Course, (course) => course.tags)
-  courses: Course[];
+  courses!: Course[];
 }

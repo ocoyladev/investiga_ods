@@ -13,23 +13,23 @@ export enum QuestionType {
 @Entity({ name: 'questions' })
 export class Question extends BaseEntity {
   @ManyToOne(() => Quiz, (quiz) => quiz.questions, { onDelete: 'CASCADE' })
-  quiz: Quiz;
+  quiz!: Quiz;
 
   @Column({ type: 'enum', enum: QuestionType, default: QuestionType.MCQ })
-  type: QuestionType;
+  type!: QuestionType;
 
   @Column({ type: 'text' })
-  prompt: string;
+  prompt!: string;
 
   @Column({ type: 'int', default: 1 })
-  points: number;
+  points!: number;
 
   @Column({ type: 'json', nullable: true })
   metadata?: Record<string, unknown>;
 
   @OneToMany(() => Option, (option) => option.question, { cascade: true })
-  options: Option[];
+  options!: Option[];
 
   @OneToMany(() => Answer, (answer) => answer.question)
-  answers: Answer[];
+  answers!: Answer[];
 }

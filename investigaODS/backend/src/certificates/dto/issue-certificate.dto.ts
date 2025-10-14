@@ -4,7 +4,7 @@ import { IsInt, IsOptional, IsString } from 'class-validator';
 export class IssueCertificateDto {
   @ApiProperty()
   @IsInt()
-  userId: number;
+  userId!: number;
 
   @ApiPropertyOptional()
   @IsOptional()

@@ -5,14 +5,14 @@ import { Course } from '../courses/course.entity';
 @Entity({ name: 'user_points' })
 export class UserPoints {
   @PrimaryGeneratedColumn()
-  id: number;
+  id!: number;
 
   @ManyToOne(() => User, { eager: true })
-  user: User;
+  user!: User;
 
   @ManyToOne(() => Course, { eager: true, nullable: true })
   course?: Course;
 
   @Column({ type: 'int', default: 0 })
-  points: number;
+  points!: number;
 }

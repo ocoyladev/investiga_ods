@@ -12,20 +12,20 @@ export enum ChallengeSubmissionStatus {
 @Entity({ name: 'challenge_submissions' })
 export class ChallengeSubmission {
   @PrimaryGeneratedColumn()
-  id: number;
+  id!: number;
 
   @ManyToOne(() => Challenge, (challenge) => challenge.submissions, { eager: true })
-  challenge: Challenge;
+  challenge!: Challenge;
 
   @ManyToOne(() => User, { eager: true })
-  user: User;
+  user!: User;
 
   @Column({ name: 'artifact_url', nullable: true })
   artifactUrl?: string;
 
   @Column({ type: 'int', default: 0 })
-  score: number;
+  score!: number;
 
   @Column({ type: 'enum', enum: ChallengeSubmissionStatus, default: ChallengeSubmissionStatus.SUBMITTED })
-  status: ChallengeSubmissionStatus;
+  status!: ChallengeSubmissionStatus;
 }

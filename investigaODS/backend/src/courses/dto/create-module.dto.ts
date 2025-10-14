@@ -5,11 +5,11 @@ export class CreateModuleDto {
   @ApiProperty()
   @IsInt()
   @Min(0)
-  index: number;
+  index!: number;
 
   @ApiProperty()
   @IsString()
-  title: string;
+  title!: string;
 
   @ApiPropertyOptional()
   @IsOptional()

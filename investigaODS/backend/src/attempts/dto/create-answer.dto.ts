@@ -4,7 +4,7 @@ import { IsInt, IsOptional, IsString } from 'class-validator';
 export class CreateAnswerDto {
   @ApiProperty()
   @IsInt()
-  questionId: number;
+  questionId!: number;
 
   @ApiPropertyOptional()
   @IsOptional()
