@@ -21,10 +21,13 @@ var NodeEnv;
 class EnvironmentVariables {
 }
 __decorate([
+    (0, class_validator_1.IsOptional)(),
+    (0, class_transformer_1.Type)(() => Number),
     (0, class_validator_1.IsNumber)(),
     __metadata("design:type", Number)
 ], EnvironmentVariables.prototype, "PORT", void 0);
 __decorate([
+    (0, class_validator_1.IsOptional)(),
     (0, class_validator_1.IsEnum)(NodeEnv),
     __metadata("design:type", String)
 ], EnvironmentVariables.prototype, "NODE_ENV", void 0);
@@ -34,6 +37,7 @@ __decorate([
     __metadata("design:type", String)
 ], EnvironmentVariables.prototype, "JWT_ACCESS_SECRET", void 0);
 __decorate([
+    (0, class_validator_1.IsOptional)(),
     (0, class_validator_1.IsString)(),
     (0, class_validator_1.IsNotEmpty)(),
     __metadata("design:type", String)
@@ -44,39 +48,47 @@ __decorate([
     __metadata("design:type", String)
 ], EnvironmentVariables.prototype, "JWT_REFRESH_SECRET", void 0);
 __decorate([
+    (0, class_validator_1.IsOptional)(),
     (0, class_validator_1.IsString)(),
     (0, class_validator_1.IsNotEmpty)(),
     __metadata("design:type", String)
 ], EnvironmentVariables.prototype, "JWT_REFRESH_EXPIRES", void 0);
 __decorate([
+    (0, class_validator_1.IsOptional)(),
     (0, class_validator_1.IsString)(),
     (0, class_validator_1.IsNotEmpty)(),
     __metadata("design:type", String)
 ], EnvironmentVariables.prototype, "DB_HOST", void 0);
 __decorate([
+    (0, class_validator_1.IsOptional)(),
+    (0, class_transformer_1.Type)(() => Number),
     (0, class_validator_1.IsNumber)(),
     __metadata("design:type", Number)
 ], EnvironmentVariables.prototype, "DB_PORT", void 0);
 __decorate([
+    (0, class_validator_1.IsOptional)(),
     (0, class_validator_1.IsString)(),
     (0, class_validator_1.IsNotEmpty)(),
     __metadata("design:type", String)
 ], EnvironmentVariables.prototype, "DB_USER", void 0);
 __decorate([
-    (0, class_validator_1.IsString)(),
     (0, class_validator_1.IsOptional)(),
+    (0, class_validator_1.IsString)(),
     __metadata("design:type", String)
 ], EnvironmentVariables.prototype, "DB_PASS", void 0);
 __decorate([
+    (0, class_validator_1.IsOptional)(),
     (0, class_validator_1.IsString)(),
     (0, class_validator_1.IsNotEmpty)(),
     __metadata("design:type", String)
 ], EnvironmentVariables.prototype, "DB_NAME", void 0);
 __decorate([
+    (0, class_validator_1.IsOptional)(),
     (0, class_validator_1.IsBooleanString)(),
     __metadata("design:type", String)
 ], EnvironmentVariables.prototype, "DB_LOGGING", void 0);
 __decorate([
+    (0, class_validator_1.IsOptional)(),
     (0, class_validator_1.IsBooleanString)(),
     __metadata("design:type", String)
 ], EnvironmentVariables.prototype, "DB_SYNC", void 0);

@@ -4,7 +4,7 @@ const common_1 = require("@nestjs/common");
 const config_1 = require("@nestjs/config");
 const core_1 = require("@nestjs/core");
 const swagger_1 = require("@nestjs/swagger");
-const cookie_parser_1 = require("cookie-parser");
+const cookieParser = require("cookie-parser");
 const app_module_1 = require("./app.module");
 async function bootstrap() {
     const app = await core_1.NestFactory.create(app_module_1.AppModule);
@@ -20,7 +20,7 @@ async function bootstrap() {
         transformOptions: { enableImplicitConversion: true },
         forbidUnknownValues: false,
     }));
-    app.use((0, cookie_parser_1.default)());
+    app.use(cookieParser());
     const swaggerConfig = new swagger_1.DocumentBuilder()
         .setTitle('InvestigaODS API')
         .setDescription('API documentation for InvestigaODS platform')
