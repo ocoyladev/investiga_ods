@@ -1,5 +1,13 @@
-import { plainToInstance } from 'class-transformer';
-import { IsBooleanString, IsEnum, IsNotEmpty, IsNumber, IsOptional, IsString, validateSync } from 'class-validator';
+import { plainToInstance, Type } from 'class-transformer';
+import {
+  IsBooleanString,
+  IsEnum,
+  IsNotEmpty,
+  IsNumber,
+  IsOptional,
+  IsString,
+  validateSync,
+} from 'class-validator';
 
 enum NodeEnv {
   Development = 'development',
@@ -8,52 +16,64 @@ enum NodeEnv {
 }
 
 class EnvironmentVariables {
+  @IsOptional()
+  @Type(() => Number)
   @IsNumber()
-  PORT!: number;
+  PORT?: number;
 
+  @IsOptional()
   @IsEnum(NodeEnv)
-  NODE_ENV!: NodeEnv;
+  NODE_ENV?: NodeEnv;
 
   @IsString()
   @IsNotEmpty()
   JWT_ACCESS_SECRET!: string;
 
+  @IsOptional()
   @IsString()
   @IsNotEmpty()
-  JWT_ACCESS_EXPIRES!: string;
+  JWT_ACCESS_EXPIRES?: string;
 
   @IsString()
   @IsNotEmpty()
   JWT_REFRESH_SECRET!: string;
 
-  @IsString()
-  @IsNotEmpty()
-  JWT_REFRESH_EXPIRES!: string;
-
-  @IsString()
-  @IsNotEmpty()
-  DB_HOST!: string;
-
-  @IsNumber()
-  DB_PORT!: number;
-
-  @IsString()
-  @IsNotEmpty()
-  DB_USER!: string;
-
-  @IsString()
   @IsOptional()
+  @IsString()
+  @IsNotEmpty()
+  JWT_REFRESH_EXPIRES?: string;
+
+  @IsOptional()
+  @IsString()
+  @IsNotEmpty()
+  DB_HOST?: string;
+
+  @IsOptional()
+  @Type(() => Number)
+  @IsNumber()
+  DB_PORT?: number;
+
+  @IsOptional()
+  @IsString()
+  @IsNotEmpty()
+  DB_USER?: string;
+
+  @IsOptional()
+  @IsString()
   DB_PASS?: string;
 
+  @IsOptional()
   @IsString()
   @IsNotEmpty()
-  DB_NAME!: string;
+  DB_NAME?: string;
 
+  @IsOptional()
   @IsBooleanString()
-  DB_LOGGING!: string;
+  DB_LOGGING?: string;
 
+  @IsOptional()
   @IsBooleanString()
-  DB_SYNC!: string;
+  DB_SYNC?: string;
 }
 
 export function validate(config: Record<string, unknown>) {
