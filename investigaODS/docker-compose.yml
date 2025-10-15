@@ -14,6 +14,7 @@ services:
       - "3306:3306"
     volumes:
       - db_data:/var/lib/mysql
+      - ./db/mysql/init:/docker-entrypoint-initdb.d
     command: ["mysqld", "--default-authentication-plugin=mysql_native_password"]
     healthcheck:
       test: ["CMD-SHELL", "mysqladmin ping -h 127.0.0.1 -u$$MYSQL_USER -p$$MYSQL_PASSWORD --silent"]
@@ -40,6 +41,7 @@ services:
     container_name: investigaods_backend
     env_file:
       - ./backend/.env
+    command: sh -c "npm run schema:sync && npm run start:dev"
     ports:
       - "3000:3000"
     depends_on:
