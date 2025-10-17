@@ -807,4 +807,3 @@ WHERE NOT EXISTS (SELECT 1 FROM user_points WHERE user_id = @student_emilia_id A
 INSERT INTO user_points (user_id, course_id, points)
 SELECT @student_diego_id, @course_economia, 120
 WHERE NOT EXISTS (SELECT 1 FROM user_points WHERE user_id = @student_diego_id AND course_id = @course_economia);
-
