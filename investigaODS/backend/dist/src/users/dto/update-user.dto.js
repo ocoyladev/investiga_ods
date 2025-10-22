@@ -29,6 +29,12 @@ __decorate([
     __metadata("design:type", String)
 ], UpdateUserDto.prototype, "lastName", void 0);
 __decorate([
+    (0, swagger_1.ApiPropertyOptional)(),
+    (0, class_validator_1.IsOptional)(),
+    (0, class_validator_1.IsString)(),
+    __metadata("design:type", String)
+], UpdateUserDto.prototype, "avatarUrl", void 0);
+__decorate([
     (0, swagger_1.ApiPropertyOptional)({ enum: user_role_enum_1.UserRole }),
     (0, class_validator_1.IsOptional)(),
     (0, class_validator_1.IsEnum)(user_role_enum_1.UserRole),

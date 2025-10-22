@@ -9,7 +9,7 @@ import { UpdateProgressDto } from './dto/update-progress.dto';
 @ApiTags('Progress')
 @ApiBearerAuth()
 @UseGuards(JwtAuthGuard)
-@Controller()
+@Controller('progress')
 export class ProgressController {
   constructor(private readonly progressService: ProgressService) {}
 
@@ -18,7 +18,7 @@ export class ProgressController {
     return this.progressService.updateProgress(Number(id), user, dto);
   }
 
-  @Get('me/courses/:courseId/progress')
+  @Get('me/courses/:courseId')
   async courseProgress(@Param('courseId') courseId: number, @CurrentUser() user: User) {
     return this.progressService.getCourseProgress(Number(courseId), user);
   }

@@ -46,15 +46,37 @@ export class ProgressService {
   }
 
   async getCourseProgress(courseId: number, user: User) {
+    // First, verify if the course exists and get total lessons
+    const totalLessons = await this.lessonsRepository
+      .createQueryBuilder('lesson')
+      .innerJoin('lesson.module', 'module')
+      .innerJoin('module.course', 'course')
+      .where('course.id = :courseId', { courseId })
+      .getCount();
+
+    if (totalLessons === 0) {
+      throw new NotFoundException(`Course with ID ${courseId} not found or has no lessons`);
+    }
+
+    // Get all progress entries for the user in this course
     const progress = await this.progressRepository
       .createQueryBuilder('progress')
-      .leftJoinAndSelect('progress.lesson', 'lesson')
-      .leftJoin('lesson.module', 'module')
-      .leftJoin('module.course', 'course')
+      .innerJoinAndSelect('progress.lesson', 'lesson')
+      .innerJoinAndSelect('lesson.module', 'module')
+      .innerJoinAndSelect('module.course', 'course')
       .where('course.id = :courseId', { courseId })
-      .andWhere('progress.userId = :userId', { userId: user.id })
+      .andWhere('progress.user = :userId', { userId: user.id })
       .getMany();
-    return progress.map((entry) => this.stripUser(entry));
+
+    const completedLessons = progress.filter((p: LessonProgress) => p.completed).length;
+    
+    return {
+      courseId,
+      totalLessons,
+      completedLessons,
+      progressPercentage: totalLessons > 0 ? (completedLessons / totalLessons) * 100 : 0,
+      lessonProgress: progress.map((entry: LessonProgress) => this.stripUser(entry))
+    };
   }
 
   private stripUser(entry: LessonProgress) {
