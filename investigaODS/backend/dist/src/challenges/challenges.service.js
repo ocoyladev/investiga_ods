@@ -47,7 +47,8 @@ let ChallengesService = class ChallengesService {
         return this.stripSubmissionRelations(saved);
     }
     async submit(challengeId, user, dto) {
-        const challenge = await this.challengesRepository.findOne({ where: { id: challengeId } });
+        var _a, _b;
+        const challenge = await this.challengesRepository.findOne({ where: { id: challengeId }, relations: ['course'] });
         if (!challenge) {
             throw new common_1.NotFoundException('Challenge not found');
         }
@@ -58,6 +59,10 @@ let ChallengesService = class ChallengesService {
             status: challenge_submission_entity_1.ChallengeSubmissionStatus.SUBMITTED,
         });
         const saved = await this.submissionsRepository.save(submission);
+        const pointsToAward = (_a = challenge.points) !== null && _a !== void 0 ? _a : 0;
+        if (pointsToAward > 0 && ((_b = challenge.course) === null || _b === void 0 ? void 0 : _b.id)) {
+            await this.awardPoints(user, challenge.course.id, pointsToAward);
+        }
         return this.stripSubmissionRelations(saved);
     }
     async awardPoints(user, courseId, points) {

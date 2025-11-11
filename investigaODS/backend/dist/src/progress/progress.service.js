@@ -53,15 +53,31 @@ let ProgressService = class ProgressService {
         return this.stripUser(saved);
     }
     async getCourseProgress(courseId, user) {
+        const totalLessons = await this.lessonsRepository
+            .createQueryBuilder('lesson')
+            .innerJoin('lesson.module', 'module')
+            .innerJoin('module.course', 'course')
+            .where('course.id = :courseId', { courseId })
+            .getCount();
+        if (totalLessons === 0) {
+            throw new common_1.NotFoundException(`Course with ID ${courseId} not found or has no lessons`);
+        }
         const progress = await this.progressRepository
             .createQueryBuilder('progress')
-            .leftJoinAndSelect('progress.lesson', 'lesson')
-            .leftJoin('lesson.module', 'module')
-            .leftJoin('module.course', 'course')
+            .innerJoinAndSelect('progress.lesson', 'lesson')
+            .innerJoinAndSelect('lesson.module', 'module')
+            .innerJoinAndSelect('module.course', 'course')
             .where('course.id = :courseId', { courseId })
-            .andWhere('progress.userId = :userId', { userId: user.id })
+            .andWhere('progress.user = :userId', { userId: user.id })
             .getMany();
-        return progress.map((entry) => this.stripUser(entry));
+        const completedLessons = progress.filter((p) => p.completed).length;
+        return {
+            courseId,
+            totalLessons,
+            completedLessons,
+            progressPercentage: totalLessons > 0 ? (completedLessons / totalLessons) * 100 : 0,
+            lessonProgress: progress.map((entry) => this.stripUser(entry))
+        };
     }
     stripUser(entry) {
         if (entry.user) {
