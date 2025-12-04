@@ -1,6 +1,7 @@
 import { Body, Controller, Get, Param, Patch, UseGuards } from '@nestjs/common';
 import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 import { UsersService } from '../users/users.service';
+import { CoursesService } from '../courses/courses.service';
 import { JwtAuthGuard } from '../common/guards/jwt-auth.guard';
 import { RolesGuard } from '../common/guards/roles.guard';
 import { Roles } from '../common/decorators/roles.decorator';
@@ -13,7 +14,10 @@ import { UpdateUserDto } from '../users/dto/update-user.dto';
 @Roles(UserRole.ADMIN)
 @Controller('admin')
 export class AdminController {
-  constructor(private readonly usersService: UsersService) {}
+  constructor(
+    private readonly usersService: UsersService,
+    private readonly coursesService: CoursesService,
+  ) {}
 
   @Get('users')
   async listUsers() {
@@ -26,5 +30,10 @@ export class AdminController {
     const updated = await this.usersService.update(Number(id), dto);
     const { passwordHash, ...rest } = updated;
     return rest;
+  }
+
+  @Get('courses')
+  async listCourses() {
+    return this.coursesService.findAllForAdmin();
   }
 }

@@ -16,14 +16,16 @@ exports.AdminController = void 0;
 const common_1 = require("@nestjs/common");
 const swagger_1 = require("@nestjs/swagger");
 const users_service_1 = require("../users/users.service");
+const courses_service_1 = require("../courses/courses.service");
 const jwt_auth_guard_1 = require("../common/guards/jwt-auth.guard");
 const roles_guard_1 = require("../common/guards/roles.guard");
 const roles_decorator_1 = require("../common/decorators/roles.decorator");
 const user_role_enum_1 = require("../users/user-role.enum");
 const update_user_dto_1 = require("../users/dto/update-user.dto");
 let AdminController = class AdminController {
-    constructor(usersService) {
+    constructor(usersService, coursesService) {
         this.usersService = usersService;
+        this.coursesService = coursesService;
     }
     async listUsers() {
         const users = await this.usersService.findAll();
@@ -33,6 +35,9 @@ let AdminController = class AdminController {
         const updated = await this.usersService.update(Number(id), dto);
         const { passwordHash, ...rest } = updated;
         return rest;
+    }
+    async listCourses() {
+        return this.coursesService.findAllForAdmin();
     }
 };
 exports.AdminController = AdminController;
@@ -50,12 +55,19 @@ __decorate([
     __metadata("design:paramtypes", [Number, update_user_dto_1.UpdateUserDto]),
     __metadata("design:returntype", Promise)
 ], AdminController.prototype, "updateUser", null);
+__decorate([
+    (0, common_1.Get)('courses'),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", []),
+    __metadata("design:returntype", Promise)
+], AdminController.prototype, "listCourses", null);
 exports.AdminController = AdminController = __decorate([
     (0, swagger_1.ApiTags)('Admin'),
     (0, swagger_1.ApiBearerAuth)(),
     (0, common_1.UseGuards)(jwt_auth_guard_1.JwtAuthGuard, roles_guard_1.RolesGuard),
     (0, roles_decorator_1.Roles)(user_role_enum_1.UserRole.ADMIN),
     (0, common_1.Controller)('admin'),
-    __metadata("design:paramtypes", [users_service_1.UsersService])
+    __metadata("design:paramtypes", [users_service_1.UsersService,
+        courses_service_1.CoursesService])
 ], AdminController);
 //# sourceMappingURL=admin.controller.js.map

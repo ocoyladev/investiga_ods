@@ -7,9 +7,10 @@ export class CreateCourseDto {
   @IsString()
   title!: string;
 
-  @ApiProperty()
+  @ApiPropertyOptional()
+  @IsOptional()
   @IsString()
-  slug!: string;
+  slug?: string;
 
   @ApiPropertyOptional()
   @IsOptional()

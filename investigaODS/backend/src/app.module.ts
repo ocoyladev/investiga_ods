@@ -8,6 +8,7 @@ import { typeOrmConfigFactory } from './database/typeorm.config';
 import { AuthModule } from './auth/auth.module';
 import { UsersModule } from './users/users.module';
 import { PlansModule } from './plans/plans.module';
+import { SubscriptionsModule } from './subscriptions/subscriptions.module';
 import { CoursesModule } from './courses/courses.module';
 import { EnrollmentsModule } from './enrollments/enrollments.module';
 import { ProgressModule } from './progress/progress.module';
@@ -21,6 +22,8 @@ import { ChatModule } from './chat/chat.module';
 import { LiveClassesModule } from './live-classes/live-classes.module';
 import { ChallengesModule } from './challenges/challenges.module';
 import { HealthModule } from './health/health.module';
+import { TagsModule } from './tags/tags.module';
+import { FavoritesModule } from './favorites/favorites.module';
 
 @Module({
   imports: [
@@ -38,6 +41,7 @@ import { HealthModule } from './health/health.module';
     AuthModule,
     UsersModule,
     PlansModule,
+    SubscriptionsModule,
     CoursesModule,
     EnrollmentsModule,
     ProgressModule,
@@ -49,6 +53,8 @@ import { HealthModule } from './health/health.module';
     LiveClassesModule,
     ChallengesModule,
     HealthModule,
+    TagsModule,
+    FavoritesModule,
   ],
   providers: [
     {

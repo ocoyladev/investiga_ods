@@ -23,7 +23,7 @@ export declare enum CourseTier {
 export declare class Course extends BaseEntity {
     owner: User;
     title: string;
-    slug: string;
+    slug?: string;
     summary?: string;
     description?: string;
     thumbnailUrl?: string;

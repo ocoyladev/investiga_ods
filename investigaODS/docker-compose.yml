@@ -65,6 +65,25 @@ services:
     volumes:
       - ./frontend:/app
       - /app/node_modules
+
+  ia:
+    build:
+      context: ./ia
+      dockerfile: Dockerfile
+    container_name: investigaods_ia
+    env_file:
+      - ./ia/config/.env
+    ports:
+      - "5001:5001"
+    restart: unless-stopped
+    volumes:
+      - ./ia:/app
+      - /app/__pycache__
+    healthcheck:
+      test: ["CMD-SHELL", "curl -f http://localhost:5001/api/health || exit 1"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
     
 volumes:
   db_data:

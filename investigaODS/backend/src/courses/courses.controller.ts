@@ -5,7 +5,9 @@ import { CreateCourseDto } from './dto/create-course.dto';
 import { UpdateCourseDto } from './dto/update-course.dto';
 import { CourseFilterDto } from './dto/course-filter.dto';
 import { CreateModuleDto } from './dto/create-module.dto';
+import { UpdateModuleDto } from './dto/update-module.dto';
 import { CreateLessonDto } from './dto/create-lesson.dto';
+import { UpdateLessonDto } from './dto/update-lesson.dto';
 import { JwtAuthGuard } from '../common/guards/jwt-auth.guard';
 import { RolesGuard } from '../common/guards/roles.guard';
 import { Roles } from '../common/decorators/roles.decorator';
@@ -23,9 +25,25 @@ export class CoursesController {
     return this.coursesService.findAll(filters);
   }
 
+  @Get('my-courses')
+  @ApiBearerAuth()
+  @UseGuards(JwtAuthGuard, RolesGuard)
+  @Roles(UserRole.INSTRUCTOR, UserRole.ADMIN)
+  async getMyCourses(@CurrentUser() user: User) {
+    return this.coursesService.findMyCourses(user);
+  }
+
   @Get(':id')
   async getById(@Param('id') id: number) {
     return this.coursesService.findById(Number(id));
+  }
+
+  @Get(':id/stats')
+  @ApiBearerAuth()
+  @UseGuards(JwtAuthGuard, RolesGuard)
+  @Roles(UserRole.INSTRUCTOR, UserRole.ADMIN)
+  async getStats(@Param('id') id: number, @CurrentUser() user: User) {
+    return this.coursesService.getCourseStats(Number(id), user);
   }
 
   @Get(':id/outline')
@@ -72,6 +90,27 @@ export class CoursesController {
     return this.coursesService.createModule(Number(id), dto, user);
   }
 
+  @Patch('modules/:id')
+  @ApiBearerAuth()
+  @UseGuards(JwtAuthGuard, RolesGuard)
+  @Roles(UserRole.INSTRUCTOR, UserRole.ADMIN)
+  async updateModule(
+    @Param('id') id: number,
+    @CurrentUser() user: User,
+    @Body() dto: UpdateModuleDto,
+  ) {
+    return this.coursesService.updateModule(Number(id), dto, user);
+  }
+
+  @Delete('modules/:id')
+  @ApiBearerAuth()
+  @UseGuards(JwtAuthGuard, RolesGuard)
+  @Roles(UserRole.INSTRUCTOR, UserRole.ADMIN)
+  async removeModule(@Param('id') id: number, @CurrentUser() user: User) {
+    await this.coursesService.removeModule(Number(id), user);
+    return { success: true };
+  }
+
   @Post('/modules/:id/lessons')
   @ApiBearerAuth()
   @UseGuards(JwtAuthGuard, RolesGuard)
@@ -82,5 +121,26 @@ export class CoursesController {
     @Body() dto: CreateLessonDto,
   ) {
     return this.coursesService.createLesson(Number(id), dto, user);
+  }
+
+  @Patch('lessons/:id')
+  @ApiBearerAuth()
+  @UseGuards(JwtAuthGuard, RolesGuard)
+  @Roles(UserRole.INSTRUCTOR, UserRole.ADMIN)
+  async updateLesson(
+    @Param('id') id: number,
+    @CurrentUser() user: User,
+    @Body() dto: UpdateLessonDto,
+  ) {
+    return this.coursesService.updateLesson(Number(id), dto, user);
+  }
+
+  @Delete('lessons/:id')
+  @ApiBearerAuth()
+  @UseGuards(JwtAuthGuard, RolesGuard)
+  @Roles(UserRole.INSTRUCTOR, UserRole.ADMIN)
+  async removeLesson(@Param('id') id: number, @CurrentUser() user: User) {
+    await this.coursesService.removeLesson(Number(id), user);
+    return { success: true };
   }
 }
