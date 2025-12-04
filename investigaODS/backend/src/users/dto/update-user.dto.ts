@@ -13,6 +13,11 @@ export class UpdateUserDto {
   @IsString()
   lastName?: string;
 
+  @ApiPropertyOptional()
+  @IsOptional()
+  @IsString()
+  avatarUrl?: string;
+
   @ApiPropertyOptional({ enum: UserRole })
   @IsOptional()
   @IsEnum(UserRole)

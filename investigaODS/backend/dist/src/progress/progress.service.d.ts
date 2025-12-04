@@ -8,6 +8,12 @@ export declare class ProgressService {
     private readonly lessonsRepository;
     constructor(progressRepository: Repository<LessonProgress>, lessonsRepository: Repository<Lesson>);
     updateProgress(lessonId: number, user: User, dto: UpdateProgressDto): Promise<LessonProgress>;
-    getCourseProgress(courseId: number, user: User): Promise<LessonProgress[]>;
+    getCourseProgress(courseId: number, user: User): Promise<{
+        courseId: number;
+        totalLessons: number;
+        completedLessons: number;
+        progressPercentage: number;
+        lessonProgress: LessonProgress[];
+    }>;
     private stripUser;
 }

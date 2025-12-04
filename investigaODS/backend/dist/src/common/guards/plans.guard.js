@@ -15,6 +15,7 @@ const core_1 = require("@nestjs/core");
 const plans_decorator_1 = require("../decorators/plans.decorator");
 const membership_plan_entity_1 = require("../../plans/membership-plan.entity");
 const subscriptions_service_1 = require("../../subscriptions/subscriptions.service");
+const user_role_enum_1 = require("../../users/user-role.enum");
 let PlansGuard = class PlansGuard {
     constructor(reflector, subscriptionsService) {
         this.reflector = reflector;
@@ -32,6 +33,9 @@ let PlansGuard = class PlansGuard {
         const user = request.user;
         if (!user) {
             throw new common_1.ForbiddenException('Authentication required');
+        }
+        if (user.role === user_role_enum_1.UserRole.INSTRUCTOR || user.role === user_role_enum_1.UserRole.ADMIN) {
+            return true;
         }
         const subscription = await this.subscriptionsService.findActiveSubscription(user.id);
         if (!subscription) {

@@ -5,5 +5,11 @@ export declare class ProgressController {
     private readonly progressService;
     constructor(progressService: ProgressService);
     updateProgress(id: number, user: User, dto: UpdateProgressDto): Promise<import("./lesson-progress.entity").LessonProgress>;
-    courseProgress(courseId: number, user: User): Promise<import("./lesson-progress.entity").LessonProgress[]>;
+    courseProgress(courseId: number, user: User): Promise<{
+        courseId: number;
+        totalLessons: number;
+        completedLessons: number;
+        progressPercentage: number;
+        lessonProgress: import("./lesson-progress.entity").LessonProgress[];
+    }>;
 }

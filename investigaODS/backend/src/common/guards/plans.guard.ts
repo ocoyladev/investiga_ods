@@ -3,6 +3,7 @@ import { Reflector } from '@nestjs/core';
 import { PLAN_KEY } from '../decorators/plans.decorator';
 import { MembershipPlanCode } from '../../plans/membership-plan.entity';
 import { SubscriptionsService } from '../../subscriptions/subscriptions.service';
+import { UserRole } from '../../users/user-role.enum';
 
 @Injectable()
 export class PlansGuard implements CanActivate {
@@ -23,6 +24,11 @@ export class PlansGuard implements CanActivate {
     const user = request.user;
     if (!user) {
       throw new ForbiddenException('Authentication required');
+    }
+    
+    // Instructores y Administradores tienen acceso completo sin restricciones de plan
+    if (user.role === UserRole.INSTRUCTOR || user.role === UserRole.ADMIN) {
+      return true;
     }
     const subscription = await this.subscriptionsService.findActiveSubscription(user.id);
     if (!subscription) {

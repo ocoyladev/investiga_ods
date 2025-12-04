@@ -48,7 +48,7 @@ __decorate([
     __metadata("design:type", String)
 ], Course.prototype, "title", void 0);
 __decorate([
-    (0, typeorm_1.Column)({ unique: true }),
+    (0, typeorm_1.Column)({ unique: false, nullable: true }),
     __metadata("design:type", String)
 ], Course.prototype, "slug", void 0);
 __decorate([

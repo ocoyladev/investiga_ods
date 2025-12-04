@@ -17,6 +17,7 @@ const typeorm_config_1 = require("./database/typeorm.config");
 const auth_module_1 = require("./auth/auth.module");
 const users_module_1 = require("./users/users.module");
 const plans_module_1 = require("./plans/plans.module");
+const subscriptions_module_1 = require("./subscriptions/subscriptions.module");
 const courses_module_1 = require("./courses/courses.module");
 const enrollments_module_1 = require("./enrollments/enrollments.module");
 const progress_module_1 = require("./progress/progress.module");
@@ -30,6 +31,8 @@ const chat_module_1 = require("./chat/chat.module");
 const live_classes_module_1 = require("./live-classes/live-classes.module");
 const challenges_module_1 = require("./challenges/challenges.module");
 const health_module_1 = require("./health/health.module");
+const tags_module_1 = require("./tags/tags.module");
+const favorites_module_1 = require("./favorites/favorites.module");
 let AppModule = class AppModule {
 };
 exports.AppModule = AppModule;
@@ -50,6 +53,7 @@ exports.AppModule = AppModule = __decorate([
             auth_module_1.AuthModule,
             users_module_1.UsersModule,
             plans_module_1.PlansModule,
+            subscriptions_module_1.SubscriptionsModule,
             courses_module_1.CoursesModule,
             enrollments_module_1.EnrollmentsModule,
             progress_module_1.ProgressModule,
@@ -61,6 +65,8 @@ exports.AppModule = AppModule = __decorate([
             live_classes_module_1.LiveClassesModule,
             challenges_module_1.ChallengesModule,
             health_module_1.HealthModule,
+            tags_module_1.TagsModule,
+            favorites_module_1.FavoritesModule,
         ],
         providers: [
             {

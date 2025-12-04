@@ -42,7 +42,7 @@ __decorate([
     __metadata("design:returntype", Promise)
 ], ProgressController.prototype, "updateProgress", null);
 __decorate([
-    (0, common_1.Get)('me/courses/:courseId/progress'),
+    (0, common_1.Get)('me/courses/:courseId'),
     __param(0, (0, common_1.Param)('courseId')),
     __param(1, (0, current_user_decorator_1.CurrentUser)()),
     __metadata("design:type", Function),
@@ -53,7 +53,7 @@ exports.ProgressController = ProgressController = __decorate([
     (0, swagger_1.ApiTags)('Progress'),
     (0, swagger_1.ApiBearerAuth)(),
     (0, common_1.UseGuards)(jwt_auth_guard_1.JwtAuthGuard),
-    (0, common_1.Controller)(),
+    (0, common_1.Controller)('progress'),
     __metadata("design:paramtypes", [progress_service_1.ProgressService])
 ], ProgressController);
 //# sourceMappingURL=progress.controller.js.map
