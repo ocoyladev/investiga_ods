@@ -125,7 +125,7 @@ export const DashboardBasic: React.FC = () => {
             }}>
               Aún no estás inscrito en ningún curso. <br />
               <span 
-                onClick={() => navigate('/courses')}
+                onClick={() => navigate('/explore')}
                 style={{
                   color: theme.colors.primary,
                   cursor: 'pointer',

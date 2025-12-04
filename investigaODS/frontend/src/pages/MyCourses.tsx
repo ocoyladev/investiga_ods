@@ -340,7 +340,7 @@ export const MyCourses: React.FC = () => {
                 Aún no estás inscrito en ningún curso
               </p>
               <button
-                onClick={() => navigate('/courses')}
+                onClick={() => navigate('/explore')}
                 style={{
                   padding: '12px 24px',
                   backgroundColor: theme.colors.primary,
