@@ -1,9 +1,11 @@
 import { UsersService } from '../users/users.service';
+import { CoursesService } from '../courses/courses.service';
 import { UserRole } from '../users/user-role.enum';
 import { UpdateUserDto } from '../users/dto/update-user.dto';
 export declare class AdminController {
     private readonly usersService;
-    constructor(usersService: UsersService);
+    private readonly coursesService;
+    constructor(usersService: UsersService, coursesService: CoursesService);
     listUsers(): Promise<{
         email: string;
         firstName?: string;
@@ -34,4 +36,5 @@ export declare class AdminController {
         createdAt: Date;
         updatedAt: Date;
     }>;
+    listCourses(): Promise<import("../entities").Course[]>;
 }

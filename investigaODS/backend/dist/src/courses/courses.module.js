@@ -16,12 +16,13 @@ const course_module_entity_1 = require("./course-module.entity");
 const lesson_entity_1 = require("../lessons/lesson.entity");
 const tag_entity_1 = require("../tags/tag.entity");
 const roles_guard_1 = require("../common/guards/roles.guard");
+const enrollment_entity_1 = require("../enrollments/enrollment.entity");
 let CoursesModule = class CoursesModule {
 };
 exports.CoursesModule = CoursesModule;
 exports.CoursesModule = CoursesModule = __decorate([
     (0, common_1.Module)({
-        imports: [typeorm_1.TypeOrmModule.forFeature([course_entity_1.Course, course_module_entity_1.CourseModule, lesson_entity_1.Lesson, tag_entity_1.Tag])],
+        imports: [typeorm_1.TypeOrmModule.forFeature([course_entity_1.Course, course_module_entity_1.CourseModule, lesson_entity_1.Lesson, tag_entity_1.Tag, enrollment_entity_1.Enrollment])],
         controllers: [courses_controller_1.CoursesController],
         providers: [courses_service_1.CoursesService, roles_guard_1.RolesGuard],
         exports: [courses_service_1.CoursesService],

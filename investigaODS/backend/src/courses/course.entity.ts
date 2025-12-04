@@ -40,8 +40,8 @@ export class Course extends BaseEntity {
   @Column()
   title!: string;
 
-  @Column({ unique: true })
-  slug!: string;
+  @Column({ unique: false, nullable: true })
+  slug?: string;
 
   @Column({ nullable: true })
   summary?: string;

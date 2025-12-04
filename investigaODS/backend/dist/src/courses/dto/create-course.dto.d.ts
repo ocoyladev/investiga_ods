@@ -1,7 +1,7 @@
 import { CourseModality, CourseTier, CourseVisibility } from '../course.entity';
 export declare class CreateCourseDto {
     title: string;
-    slug: string;
+    slug?: string;
     summary?: string;
     description?: string;
     thumbnailUrl?: string;

@@ -7,12 +7,15 @@ import { UpdateCourseDto } from './dto/update-course.dto';
 import { User } from '../users/user.entity';
 import { CourseModule } from './course-module.entity';
 import { CreateModuleDto } from './dto/create-module.dto';
+import { UpdateModuleDto } from './dto/update-module.dto';
 import { CreateLessonDto } from './dto/create-lesson.dto';
+import { UpdateLessonDto } from './dto/update-lesson.dto';
 import { Lesson } from '../lessons/lesson.entity';
 import { CourseFilterDto } from './dto/course-filter.dto';
 import { Tag } from '../tags/tag.entity';
 import { MembershipPlanCode } from '../plans/membership-plan.entity';
 import { UserRole } from '../users/user-role.enum';
+import { Enrollment, EnrollmentStatus } from '../enrollments/enrollment.entity';
 
 @Injectable()
 export class CoursesService {
@@ -25,6 +28,8 @@ export class CoursesService {
     private readonly lessonsRepository: Repository<Lesson>,
     @InjectRepository(Tag)
     private readonly tagsRepository: Repository<Tag>,
+    @InjectRepository(Enrollment)
+    private readonly enrollmentsRepository: Repository<Enrollment>,
   ) {}
 
   async findAll(filters: CourseFilterDto) {
@@ -53,9 +58,28 @@ export class CoursesService {
     return courses.map((course) => this.stripCourseOwner(course));
   }
 
+  async findAllForAdmin() {
+    const courses = await this.coursesRepository.find({
+      relations: ['owner', 'tags'],
+      order: { createdAt: 'DESC' },
+    });
+    return courses.map((course) => this.stripCourseOwner(course));
+  }
+
+  async findMyCourses(user: User) {
+    const courses = await this.coursesRepository.find({
+      where: { owner: { id: user.id } },
+      relations: ['owner', 'tags', 'modules'],
+      order: { createdAt: 'DESC' },
+    });
+    return courses.map((course) => this.stripCourseOwner(course));
+  }
+
   async create(owner: User, dto: CreateCourseDto) {
+    const slug = dto.slug || this.generateSlug(dto.title);
     const course = this.coursesRepository.create({
       ...dto,
+      slug,
       owner,
       tags: await this.resolveTags(dto.tags),
     });
@@ -111,11 +135,77 @@ export class CoursesService {
     return this.stripCourseOwner(course);
   }
 
+  async getCourseStats(courseId: number, user: User) {
+    const course = await this.findById(courseId);
+    this.assertCanManageCourse(course, user);
+
+    // Count enrollments
+    const totalStudents = await this.enrollmentsRepository.count({
+      where: { course: { id: courseId } },
+    });
+
+    const activeStudents = await this.enrollmentsRepository.count({
+      where: { course: { id: courseId }, status: EnrollmentStatus.ACTIVE },
+    });
+
+    const completedStudents = await this.enrollmentsRepository.count({
+      where: { course: { id: courseId }, status: EnrollmentStatus.COMPLETED },
+    });
+
+    // Count modules and lessons
+    const modules = await this.modulesRepository.find({
+      where: { course: { id: courseId } },
+      relations: ['lessons'],
+    });
+
+    const totalModules = modules.length;
+    const totalLessons = modules.reduce((sum, mod) => sum + (mod.lessons?.length || 0), 0);
+
+    return {
+      courseId,
+      students: {
+        total: totalStudents,
+        active: activeStudents,
+        completed: completedStudents,
+      },
+      content: {
+        modules: totalModules,
+        lessons: totalLessons,
+      },
+      rating: 0, // TODO: Implement rating system
+    };
+  }
+
   async createModule(courseId: number, dto: CreateModuleDto, user: User) {
     const course = await this.findById(courseId);
     this.assertCanManageCourse(course, user);
     const module = this.modulesRepository.create({ course, ...dto });
     return this.modulesRepository.save(module);
+  }
+
+  async updateModule(moduleId: number, dto: UpdateModuleDto, user: User) {
+    const module = await this.modulesRepository.findOne({
+      where: { id: moduleId },
+      relations: ['course', 'course.owner'],
+    });
+    if (!module) {
+      throw new NotFoundException('Module not found');
+    }
+    this.assertCanManageCourse(module.course, user);
+    Object.assign(module, dto);
+    return this.modulesRepository.save(module);
+  }
+
+  async removeModule(moduleId: number, user: User) {
+    const module = await this.modulesRepository.findOne({
+      where: { id: moduleId },
+      relations: ['course', 'course.owner'],
+    });
+    if (!module) {
+      throw new NotFoundException('Module not found');
+    }
+    this.assertCanManageCourse(module.course, user);
+    await this.modulesRepository.remove(module);
   }
 
   async createLesson(moduleId: number, dto: CreateLessonDto, user: User) {
@@ -129,6 +219,31 @@ export class CoursesService {
     this.assertCanManageCourse(module.course, user);
     const lesson = this.lessonsRepository.create({ module, ...dto });
     return this.lessonsRepository.save(lesson);
+  }
+
+  async updateLesson(lessonId: number, dto: UpdateLessonDto, user: User) {
+    const lesson = await this.lessonsRepository.findOne({
+      where: { id: lessonId },
+      relations: ['module', 'module.course', 'module.course.owner'],
+    });
+    if (!lesson) {
+      throw new NotFoundException('Lesson not found');
+    }
+    this.assertCanManageCourse(lesson.module.course, user);
+    Object.assign(lesson, dto);
+    return this.lessonsRepository.save(lesson);
+  }
+
+  async removeLesson(lessonId: number, user: User) {
+    const lesson = await this.lessonsRepository.findOne({
+      where: { id: lessonId },
+      relations: ['module', 'module.course', 'module.course.owner'],
+    });
+    if (!lesson) {
+      throw new NotFoundException('Lesson not found');
+    }
+    this.assertCanManageCourse(lesson.module.course, user);
+    await this.lessonsRepository.remove(lesson);
   }
 
   assertTierAccess(course: Course, subscriptionPlan?: MembershipPlanCode | CourseTier) {
@@ -186,5 +301,15 @@ export class CoursesService {
       course.owner = owner as User;
     }
     return course;
+  }
+
+  private generateSlug(title: string): string {
+    return title
+      .toLowerCase()
+      .normalize('NFD')
+      .replace(/[\u0300-\u036f]/g, '')
+      .replace(/[^a-z0-9]+/g, '-')
+      .replace(/(^-|-$)/g, '')
+      .substring(0, 100);
   }
 }
