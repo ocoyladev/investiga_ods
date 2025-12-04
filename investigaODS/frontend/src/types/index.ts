@@ -111,8 +111,7 @@ export interface Enrollment {
   status: EnrollmentStatus;
   createdAt: string;
   course?: Course;
-} course?: Course;
-}
+} 
 
 export interface LessonProgress {
   id: string;
