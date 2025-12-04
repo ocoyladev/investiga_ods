@@ -28,8 +28,10 @@ export const Profile: React.FC = () => {
 
   const userRole = user?.role === 'INSTRUCTOR' ? 'INSTRUCTOR' : 
                    user?.role === 'ADMIN' ? 'ADMIN' :
-                   user?.tier === 'PRO' ? 'STUDENT_PRO' : 'STUDENT_FREE';
+                   user?.planCode === 'PRO' ? 'STUDENT_PRO' : 'STUDENT_FREE';
 
+
+                   
   // Load instructor stats
   useEffect(() => {
     const loadInstructorStats = async () => {
@@ -136,6 +138,10 @@ export const Profile: React.FC = () => {
     ? ['Cursos\nenseñando', 'Alumnos\ntotales', 'Certificados\nemitidos']
     : ['Cursos\ninscritos', 'Cursos\ncompletados', 'Certificaciones\nobtenidas'];
 
+
+  if (enrollmentsLoading) {
+    return <div>Loading enrollments...</div>;
+  }
   return (
     <div style={{
       width: '100%',

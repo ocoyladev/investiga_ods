@@ -228,9 +228,9 @@ export const CourseBuilder: React.FC = () => {
         title: formData.title,
         description: formData.description,
         level: formData.level,
-        tierRequired: formData.tierRequired,
+        tierRequired: formData.tierRequired as 'FREE' | 'BASIC' | 'PRO',
         visibility: formData.visibility,
-        tags: formData.tags,
+        tags: availableTags.filter(tag => formData.tags.includes(tag.name)),
       });
       
       alert('✅ Curso actualizado exitosamente');

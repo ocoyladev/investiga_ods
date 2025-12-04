@@ -8,7 +8,7 @@ const logoGD = "/logo.svg";
 
 export const Certificates: React.FC = () => {
   const navigate = useNavigate();
-  const { user, userPlan, logout } = useAuth();
+  const { userPlan, logout } = useAuth();
   const { certificates, isLoading } = useCertificates();
 
   const isPro = userPlan === 'PRO';

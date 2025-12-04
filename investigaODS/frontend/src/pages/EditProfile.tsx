@@ -29,7 +29,7 @@ export const EditProfile: React.FC = () => {
 
   const userRole = user?.role === 'INSTRUCTOR' ? 'INSTRUCTOR' : 
                    user?.role === 'ADMIN' ? 'ADMIN' :
-                   user?.tier === 'PRO' ? 'STUDENT_PRO' : 'STUDENT_FREE';
+                   user?.planCode === 'PRO' ? 'STUDENT_PRO' : 'STUDENT_FREE';
 
   // Load user data
   useEffect(() => {

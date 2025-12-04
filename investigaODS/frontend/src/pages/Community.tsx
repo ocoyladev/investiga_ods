@@ -35,7 +35,7 @@ export const Community: React.FC = () => {
 
   const userRole = user?.role === 'INSTRUCTOR' ? 'INSTRUCTOR' : 
                    user?.role === 'ADMIN' ? 'ADMIN' :
-                   user?.tier === 'PRO' ? 'STUDENT_PRO' : 'STUDENT_FREE';
+                   user?.planCode === 'PRO' ? 'STUDENT_PRO' : 'STUDENT_FREE';
 
   return (
     <div style={{

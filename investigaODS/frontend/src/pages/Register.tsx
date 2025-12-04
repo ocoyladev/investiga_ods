@@ -18,7 +18,7 @@ export const Register: React.FC = () => {
   const [showErrorAlert, setShowErrorAlert] = useState(false);
   const [showSuccessAlert, setShowSuccessAlert] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
-  const [step, setStep] = useState<'register' | 'upgrade'>('register');
+  // const [step, setStep] = useState<'register' | 'upgrade'>('register');
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();

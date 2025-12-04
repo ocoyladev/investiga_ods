@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { authService, subscriptionsService } from '../services/api.service';
+// import { authService, subscriptionsService } from '../services/api.service';
 
 export const TestConnection = () => {
   const [result, setResult] = useState<string>('Presiona el botón para probar');

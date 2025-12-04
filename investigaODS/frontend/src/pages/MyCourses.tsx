@@ -20,9 +20,11 @@ interface CourseWithProgress extends Enrollment {
 export const MyCourses: React.FC = () => {
   const navigate = useNavigate();
   const { isMobile } = useBreakpoint();
-  const { user, userPlan } = useAuth();
+  const { userPlan } = useAuth();
   const { enrollments, isLoading } = useEnrollments();
-  const { favorites, loading: favoritesLoading, isFavorite, toggleFavorite } = useFavorites();
+  // const { favorites, loading: favoritesLoading, isFavorite, toggleFavorite } = useFavorites();
+  const { loading: favoritesLoading, isFavorite, toggleFavorite } = useFavorites();
+
   const [coursesWithProgress, setCoursesWithProgress] = useState<CourseWithProgress[]>([]);
   const [loadingProgress, setLoadingProgress] = useState(true);
   const hasLoadedRef = useRef(false);

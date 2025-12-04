@@ -5,7 +5,7 @@ import { useBreakpoint } from '../../hooks/useBreakpoint';
 import { AppHeader } from '../../components/AppHeader';
 import { BottomNavigation } from '../../components/mobile';
 import { theme } from '../../styles/theme';
-import { ROUTES } from '../../utils/constants';
+// import { ROUTES } from '../../utils/constants';
 import { coursesService } from '../../services/api.service';
 import type { Course, Enrollment } from '../../types';
 
@@ -16,7 +16,7 @@ interface CourseWithStudents extends Course {
 
 export const InstructorStudents: React.FC = () => {
   const navigate = useNavigate();
-  const { user } = useAuth();
+  // const { user } = useAuth();
   const { isMobile } = useBreakpoint();
   const [searchParams] = useSearchParams();
   const [courses, setCourses] = useState<CourseWithStudents[]>([]);
@@ -356,7 +356,7 @@ export const InstructorStudents: React.FC = () => {
                           fontSize: '14px',
                           color: 'rgba(255, 255, 255, 0.7)',
                         }}>
-                          {formatDate(enrollment.enrolledAt)}
+                          {formatDate(enrollment.createdAt)}
                         </div>
                       </div>
                     ))}

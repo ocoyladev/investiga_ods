@@ -3,7 +3,6 @@ import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import { AuthProvider } from './context/AuthContext';
 import { useAuth } from './hooks/useAuth';
 import { MainLayout } from './layouts/MainLayout';
-import { PublicLayout } from './layouts/PublicLayout';
 import { 
   Home, 
   Login, 

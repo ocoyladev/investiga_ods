@@ -559,7 +559,7 @@ export const InstructorDashboard: React.FC = () => {
                     gap: '8px',
                   }}>
                     <button
-                      onClick={() => navigate(ROUTES.INSTRUCTOR_COURSE_BUILDER(course.id))}
+                      onClick={() => navigate(ROUTES.INSTRUCTOR_COURSE_BUILDER(String(course.id)))}
                       style={{
                         flex: 1,
                         padding: '10px',

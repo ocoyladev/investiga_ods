@@ -99,14 +99,18 @@ export const CourseCreate: React.FC = () => {
     setError(null);
 
     try {
-      const courseData = {
+
+      const selectedTags = availableTags.filter(tag => formData.tags.includes(tag.name));
+      const courseData: any = {
         title: formData.title,
         description: formData.description,
         level: formData.level,
-        tierRequired: formData.tierRequired,
-        visibility: formData.visibility,
-        tags: formData.tags,
+        tierRequired: formData.tierRequired as 'FREE' | 'BASIC' | 'PRO',
+        visibility: formData.visibility as 'PUBLIC' | 'PRIVATE',
       };
+      if (selectedTags.length > 0) {
+        courseData.tags = selectedTags;
+      }
 
       const createdCourse = await coursesService.create(courseData);
       

@@ -5,11 +5,11 @@ import { useBreakpoint } from '../../hooks/useBreakpoint';
 import { AppHeader } from '../../components/AppHeader';
 import { BottomNavigation } from '../../components/mobile';
 import { theme } from '../../styles/theme';
-import { ROUTES } from '../../utils/constants';
-import type { UserRole, PlanCode } from '../../types';
-import api from '../../utils/api';
+// import { ROUTES } from '../../utils/constants';
+// import type { UserRole, PlanCode } from '../../types';
+import type { UserRole } from '../../types';
 
-const logoGD = "/logo.svg";
+import api from '../../utils/api';
 
 interface UserData {
   id: number;
@@ -23,8 +23,8 @@ interface UserData {
 }
 
 export const AdminUsers: React.FC = () => {
-  const navigate = useNavigate();
-  const { user, logout } = useAuth();
+  // const navigate = useNavigate();
+  // const { user, logout } = useAuth();
   const { isMobile } = useBreakpoint();
 
   const [users, setUsers] = useState<UserData[]>([]);

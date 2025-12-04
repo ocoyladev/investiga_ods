@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useAuth } from '../../hooks/useAuth';
+// import { useAuth } from '../../hooks/useAuth';
 import { useBreakpoint } from '../../hooks/useBreakpoint';
 import { AppHeader } from '../../components/AppHeader';
 import { BottomNavigation } from '../../components/mobile';
@@ -23,7 +23,7 @@ interface CourseData {
 
 export const AdminCatalog: React.FC = () => {
   const navigate = useNavigate();
-  const { user, logout } = useAuth();
+  // const { user, logout } = useAuth();
   const { isMobile } = useBreakpoint();
 
   const [courses, setCourses] = useState<CourseData[]>([]);

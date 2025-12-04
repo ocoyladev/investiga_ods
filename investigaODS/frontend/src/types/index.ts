@@ -15,6 +15,7 @@ export interface User {
   lastName?: string;
   avatarUrl?: string;
   role: UserRole;
+  planCode?: PlanCode;
   createdAt?: string;
   updatedAt?: string;
 }
@@ -22,7 +23,7 @@ export interface User {
 export interface Subscription {
   id: number;
   user: User;
-  plan: MembershipPlan;
+  plan?: MembershipPlan;
   startAt: string;
   endAt?: string;
   status: SubscriptionStatus;
@@ -111,6 +112,8 @@ export interface Enrollment {
   status: EnrollmentStatus;
   createdAt: string;
   course?: Course;
+  user?: User;
+  // enrolledAt?: Date;
 } 
 
 export interface LessonProgress {
@@ -150,15 +153,15 @@ export interface Quiz {
   weight?: number;
 }
 
-export interface Question {
-  id: string;
-  quizId: string;
-  type: QuestionType;
-  prompt: string;
-  points: number;
-  metadata?: Record<string, any>;
-  options?: QuestionOption[];
-}
+// export interface Question {
+//   id: string;
+//   quizId: string;
+//   type: QuestionType;
+//   prompt: string;
+//   points: number;
+//   metadata?: Record<string, any>;
+//   options?: QuestionOption[];
+// }
 
 export interface QuestionOption {
   id: string;
@@ -208,8 +211,6 @@ export interface Certificate {
 // MEMBERSHIP & SUBSCRIPTION TYPES
 // ============================================
 
-export type SubscriptionStatus = 'ACTIVE' | 'CANCELLED' | 'EXPIRED';
-
 export interface MembershipPlan {
   id: string;
   code: PlanCode;
@@ -217,16 +218,6 @@ export interface MembershipPlan {
   features: string[];
   status: 'ACTIVE' | 'INACTIVE';
   createdAt: string;
-}
-
-export interface Subscription {
-  id: string;
-  userId: string;
-  planId: string;
-  plan?: MembershipPlan;
-  startAt: string;
-  endAt?: string;
-  status: SubscriptionStatus;
 }
 
 // ============================================
@@ -261,15 +252,15 @@ export interface LiveClass {
 
 export type ChallengeStatus = 'PENDING' | 'SUBMITTED' | 'GRADED';
 
-export interface Challenge {
-  id: string;
-  courseId?: string;
-  lessonId?: string;
-  title: string;
-  description: string;
-  points: number;
-  rules?: Record<string, any>;
-}
+// export interface Challenge {
+//   id: string;
+//   courseId?: string;
+//   lessonId?: string;
+//   title: string;
+//   description: string;
+//   points: number;
+//   rules?: Record<string, any>;
+// }
 
 export interface ChallengeSubmission {
   id: string;

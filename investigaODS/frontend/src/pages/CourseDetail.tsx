@@ -8,83 +8,7 @@ import { AppHeader } from '../components/AppHeader';
 import { BottomNavigation } from '../components/mobile';
 import { HelpButton } from '../components/HelpButton';
 import { COLORS, ROUTES } from '../utils/constants';
-import type { CourseTier } from '../types';
-
-// Mock data - debe venir de API
-const MOCK_COURSE_DETAILS = {
-  'reciclaje-organico-avanzado': {
-    id: '1',
-    title: 'Reciclaje Orgánico Avanzado',
-    slug: 'reciclaje-organico-avanzado',
-    summary: 'Aprende técnicas avanzadas de reciclaje orgánico y compostaje.',
-    description: 'En este curso aprenderás las mejores prácticas para el reciclaje orgánico, desde la separación de residuos hasta la creación de compost de alta calidad. Ideal para principiantes que quieren contribuir al medio ambiente.',
-    thumbnailUrl: 'https://images.unsplash.com/photo-1532996122724-e3c354a0b15b?w=800',
-    level: 'BEGINNER' as const,
-    tierRequired: 'FREE' as CourseTier,
-    instructor: 'Juan Pérez',
-    duration: '4 semanas',
-    students: 1250,
-    modules: [
-      {
-        id: 'm1',
-        title: 'Introducción al Reciclaje Orgánico',
-        lessons: [
-          { id: 'l1', title: '¿Qué es el reciclaje orgánico?', duration: 15 },
-          { id: 'l2', title: 'Beneficios para el medio ambiente', duration: 20 },
-          { id: 'l3', title: 'Materiales reciclables', duration: 25 },
-        ],
-      },
-      {
-        id: 'm2',
-        title: 'Técnicas de Compostaje',
-        lessons: [
-          { id: 'l4', title: 'Tipos de compost', duration: 30 },
-          { id: 'l5', title: 'Creación de una compostera casera', duration: 40 },
-          { id: 'l6', title: 'Mantenimiento y cuidado', duration: 35 },
-        ],
-      },
-      {
-        id: 'm3',
-        title: 'Proyecto Final',
-        lessons: [
-          { id: 'l7', title: 'Diseña tu plan de reciclaje', duration: 60 },
-          { id: 'l8', title: 'Evaluación final', duration: 45 },
-        ],
-      },
-    ],
-  },
-  'gestion-residuos-industriales': {
-    id: '3',
-    title: 'Gestión de Residuos Industriales',
-    slug: 'gestion-residuos-industriales',
-    summary: 'Estrategias profesionales para gestión de residuos en industrias.',
-    description: 'Curso avanzado para profesionales que buscan especializarse en la gestión de residuos industriales. Incluye normativas, certificaciones y casos de estudio reales.',
-    thumbnailUrl: 'https://images.unsplash.com/photo-1611284446314-60a58ac0deb9?w=800',
-    level: 'ADVANCED' as const,
-    tierRequired: 'PRO' as CourseTier,
-    instructor: 'Dr. Carlos Méndez',
-    duration: '8 semanas',
-    students: 420,
-    modules: [
-      {
-        id: 'm1',
-        title: 'Normativas Internacionales',
-        lessons: [
-          { id: 'l1', title: 'ISO 14001 y certificaciones', duration: 45 },
-          { id: 'l2', title: 'Legislación ambiental', duration: 50 },
-        ],
-      },
-      {
-        id: 'm2',
-        title: 'Gestión Práctica',
-        lessons: [
-          { id: 'l3', title: 'Auditorías ambientales', duration: 60 },
-          { id: 'l4', title: 'Casos de estudio', duration: 90 },
-        ],
-      },
-    ],
-  },
-};
+// import type { CourseTier } from '../types';
 
 export const CourseDetail: React.FC = () => {
   const navigate = useNavigate();
@@ -399,7 +323,7 @@ export const CourseDetail: React.FC = () => {
         </h2>
 
         <div style={{ display: 'flex', flexDirection: 'column', gap: isMobile ? '12px' : '16px' }}>
-          {course.modules.map((module, idx) => (
+          {(course.modules ?? []).map((module, idx) => (
             <div
               key={module.id}
               style={{
@@ -427,7 +351,7 @@ export const CourseDetail: React.FC = () => {
 
               {/* Lessons */}
               <div style={{ padding: isMobile ? '4px 0' : '8px 0' }}>
-                {module.lessons.map((lesson) => (
+                {(module.lessons ?? []).map((lesson) => (
                   <div
                     key={lesson.id}
                     onClick={() => isEnrolled && canAccess && handleStartLesson(lesson.id)}

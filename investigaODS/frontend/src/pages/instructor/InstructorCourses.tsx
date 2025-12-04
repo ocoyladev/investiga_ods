@@ -18,7 +18,7 @@ interface CourseWithStats extends Course {
 
 export const InstructorCourses: React.FC = () => {
   const navigate = useNavigate();
-  const { user } = useAuth();
+  // const { user } = useAuth();
   const { isMobile } = useBreakpoint();
   const [filter, setFilter] = useState<'ALL' | 'PUBLISHED' | 'DRAFT'>('ALL');
   const [courses, setCourses] = useState<CourseWithStats[]>([]);
@@ -396,7 +396,7 @@ export const InstructorCourses: React.FC = () => {
                 borderTop: '1px solid rgba(255, 255, 255, 0.1)',
               }}>
                 <button
-                  onClick={() => navigate(ROUTES.INSTRUCTOR_COURSE_BUILDER(course.id))}
+                  onClick={() => navigate(ROUTES.INSTRUCTOR_COURSE_BUILDER(String(course.id)))}
                   style={{
                     flex: 1,
                     padding: isMobile ? '10px 8px' : '12px',
